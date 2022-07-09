@@ -9,7 +9,7 @@
               <form>
                 <div class="form-outline mb-4">
                   <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example3cg">Tu Email</label>
+                  <label class="form-label" for="form3Example3cg">Tu ID de usuario</label>
                 </div>
                 <div class="form-outline mb-4">
                   <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
