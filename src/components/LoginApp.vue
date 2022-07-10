@@ -27,7 +27,7 @@
     </div>
   </div>
   <div>
-    <SesionEstudio v-if="acciones.mostrarSesionEstudio"/>
+    <SesionEstudio v-if="acciones.mostrarSesionEstudio" :currentUser="currentUser"/>
   </div>
 </template>
 
