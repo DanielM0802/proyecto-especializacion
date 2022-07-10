@@ -47,33 +47,32 @@ export default {
         mostrarSesionEstudio: false
       },
       username: null,
+      currentUser: null,
+      users: [],
       ultimaAccion: 'mostrarLoginForm',
-      users: []
     }
   },
   methods: {
-    login(accion, username) {
-
-      this.mounted();
-      
+    login(accion, username) {      
       for (let index = 0; index < this.users.length; index++) {
         
-        if (this.users[index].username.localeCompare(username)) {
-          console.log(username);
+        if (this.users[index].username === username) {
+          console.log('funciona');
+          this.acciones[this.ultimaAccion] = false;
+          this.acciones[accion] = true ;
+          this.ultimaAccion = accion;
+          this.currentUser = this.users[index];
+
+          break;
         }
         
       }
-
-      this.acciones[this.ultimaAccion] = false;
-      this.acciones[accion] = true;
-      this.ultimaAccion = accion;
-    },
-    async mounted() {
-      await axios.get(`https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/`).then((respuesta) => {
-        this.users = respuesta.data;
-      })
-      console.log(this.users[0])
     }
+  },
+  async mounted() {
+    await axios.get(`https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/`).then((respuesta) => {
+      this.users = respuesta.data;
+    })
   }
 }
 </script>

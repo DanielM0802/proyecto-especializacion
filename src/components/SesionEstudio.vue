@@ -41,8 +41,14 @@ import Chart from 'chart.js/auto';
 
 
 export default {
+
+    props: {
+        currentUser: Object,
+    },
+
     data() {
         return {
+            user: this.currentUser,
             graficoSesiones: null,
             sesion : 
                 {
@@ -114,6 +120,8 @@ export default {
         }
     },
     async mounted() {
+        console.log(this.currentUser);
+
         const ctx = document.getElementById('myChart');
         const labels = [];
        
