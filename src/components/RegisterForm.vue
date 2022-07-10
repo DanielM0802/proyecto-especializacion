@@ -3,7 +3,7 @@
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
+          <div class="card form-container" style="border-radius: 15px;">
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Crea tu cuenta</h2>
 
@@ -38,7 +38,7 @@
 
                 <div class="d-flex justify-content-center">
                   <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Registrarme</button>
+                    class="boton-primario">Registrarme</button>
                 </div>
 
               </form>
