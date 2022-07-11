@@ -3,10 +3,10 @@
     <div class="container">
         <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist" v-if="!usuarioAutenticado">
             <li class="nav-item" @click="onClick(true)">
-                <a class="nav-link" :class="{active : mostrarLogin}">Login</a>
+                <a class="nav-link option-btn" :class="{'boton-primario' : mostrarLogin}">Login</a>
             </li>
             <li class="nav-item" @click="onClick(false)" >
-                <a class="nav-link" :class="{active : !mostrarLogin}">Registro</a>
+                <a class="nav-link option-btn" :class="{'boton-primario' : !mostrarLogin}">Registro</a>
             </li>
         </ul>
         <div class="usuario-autenticado" v-if="usuarioAutenticado">
@@ -68,10 +68,7 @@ export default {
         background-color: var(--btnColor)!important;
         color: var(--textColor)!important;
         border-radius: 5px;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding: 10px 20px;
         display: block;
         border: none;
         cursor: pointer;
@@ -79,6 +76,11 @@ export default {
         font-size: 0.875rem;
         font-weight: 700;
         letter-spacing: 1.2px;
-        background-image: linear-gradient(60deg,var(--theme-ui-colors-primary,rgb(137,25,248)),var(--theme-ui-colors-pink,rgb(230,74,145)));
+        background-image: linear-gradient(60deg,var(--theme-ui-colors-primary,rgb(137,25,248)),var(--theme-ui-colors-pink,rgb(230,74,145)))!important;
+    }
+    .option-btn{
+        text-transform: uppercase;
+        letter-spacing: 1.25px;
+        color: var(--textColor)!important;
     }
 </style>

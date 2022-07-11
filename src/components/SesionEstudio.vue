@@ -89,8 +89,4 @@ export default {
 </script>
 
 <style scoped>
-.grafico {
-    width: 1000px;
-    height: 530px;
-}
 </style>
