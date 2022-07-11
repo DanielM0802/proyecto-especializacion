@@ -1,7 +1,7 @@
 <template>
 <div class="fondo py-5">
     <div class="container">
-        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist" v-if="!usuarioAutenticado">
+        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist" v-if="mostrarAcciones">
             <li class="nav-item" @click="onClick(true)">
                 <a class="nav-link option-btn" :class="{'boton-primario' : mostrarLogin}">Login</a>
             </li>
@@ -13,7 +13,7 @@
             <SesionEstudio v-if="!mostrarLogin"/>
         </div>
         <div class="hola" v-if="!usuarioAutenticado">
-        <LoginApp v-if="mostrarLogin"/>
+        <LoginApp v-if="mostrarLogin" v-on:mostrar_acciones="toggleAcciones"/>
         <RegisterForm v-if="!mostrarLogin"/>
         </div>
     </div>
@@ -36,12 +36,16 @@ export default {
     data(){
         return {
             mostrarLogin: true,
-            usuarioAutenticado: false
+            usuarioAutenticado: false,
+            mostrarAcciones: true
         }
     },
     methods: {
         onClick(mostrar){
             this.mostrarLogin = mostrar;
+        },
+        toggleAcciones(estado){
+            this.mostrarAcciones = estado;
         }
     }
 }

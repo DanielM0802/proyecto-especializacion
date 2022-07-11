@@ -62,7 +62,7 @@ export default {
           this.acciones[accion] = true ;
           this.ultimaAccion = accion;
           this.currentUser = this.users[index];
-
+          this.$emit('mostrar_acciones', false);
           break;
         }
         
