@@ -12,6 +12,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const user = new User(req.body);
+  //AQUI SE APLICARIA BCRYPT
   await user.save();
   res.json({
     status: 'User saved'
