@@ -7,20 +7,20 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Crea tu cuenta</h2>
 
-              <form>
+              <form @submit.prevent="onSubmit">
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
+                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" v-model="user.name" />
                   <label class="form-label" for="form3Example1cg">Tu Nombre</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example3cg">Tu Email</label>
+                  <input type="text" id="form3Example3cg" class="form-control form-control-lg" v-model="user.username" />
+                  <label class="form-label" for="form3Example3cg">Tu nombre de usuario</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
+                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" v-model="user.password" />
                   <label class="form-label" for="form3Example4cg">Contraseña</label>
                 </div>
 
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
+                  <button type="submit"
                     class="boton-primario">Registrarme</button>
                 </div>
 
@@ -52,7 +52,27 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+
+  data(){
+    return {
+      user: {
+        name: null,
+        username:null,
+        password: null,
+      }
+    }
+  },
+  methods: {
+    
+    async onSubmit(){
+      const url = 'http://localhost:3000/api/users/';
+      await axios.post(url, this.user).then(res => console.log(res.data));
+    }
+
+  }
 
 }
 </script>
