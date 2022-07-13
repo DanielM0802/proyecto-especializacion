@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const path = require('path');
 const app = express();
 
@@ -9,7 +10,7 @@ const mongoose = require('mongoose');
 
 const uri = 'mongodb://DanielM_0802:r2Fl7bOhsM0Wul82@ac-pxribpk-shard-00-00.rof0thq.mongodb.net:27017,ac-pxribpk-shard-00-01.rof0thq.mongodb.net:27017,ac-pxribpk-shard-00-02.rof0thq.mongodb.net:27017/?ssl=true&replicaSet=atlas-lums8h-shard-0&authSource=admin&retryWrites=true&w=majority';
 
-
+app.use(cors());
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
