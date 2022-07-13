@@ -1,5 +1,5 @@
 <template>
-  <OptionForm msg="Welcome to Your Vue.js App"/>
+  <OptionForm/>
 </template>
 
 <script>

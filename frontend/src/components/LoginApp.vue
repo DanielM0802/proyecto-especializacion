@@ -8,11 +8,11 @@
               <h2 class="text-uppercase text-center mb-5">Inicia sesión</h2>
               <form>
                 <div class="form-outline mb-4">
-                  <input type="text" id="username" name="username" class="form-control form-control-lg" v-model="username" required/>
+                  <input type="text" id="username" name="username" class="form-control form-control-lg" v-model="usuario.username" required/>
                   <label class="form-label" for="username" >Nombre de usuario</label>
                 </div>
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
+                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" v-model="usuario.password" />
                   <label class="form-label" for="form3Example4cg">Contraseña</label>
                 </div>
                 <div class="d-flex justify-content-center">
@@ -46,17 +46,26 @@ export default {
         mostrarLoginForm: true,
         mostrarSesionEstudio: false
       },
-      username: null,
+      usuario: {
+        username: null,
+        password: null
+      },
       currentUser: null,
       users: [],
       ultimaAccion: 'mostrarLoginForm',
     }
   },
   methods: {
-    login(accion, username) {      
+    async login(accion) {      
+      console.log('llamando a api desde el frontend');
+      await axios.post('http://localhost:3000/api/users/login', this.usuario).then((respuesta) => {
+        console.log('respuestaqa')
+        console.log(respuesta.data);
+      }).catch(err => console.log(err));
+      
       for (let index = 0; index < this.users.length; index++) {
         
-        if (this.users[index].username === username) {
+        if (this.users[index].username === this.username) {
           console.log('funciona');
           this.acciones[this.ultimaAccion] = false;
           this.acciones[accion] = true ;
