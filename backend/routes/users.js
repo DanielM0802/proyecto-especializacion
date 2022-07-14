@@ -52,12 +52,23 @@ router.post('/login', async function (req, res) {
       username: user.username
   }, 'Token123');
 
-  res.json({
+  res.header('auth-token', token).json({
     error: null,
-    mensaje: 'Bienvenido!',
-    token
-  });
+    data: {token}
+  })
 
+  // res.json({
+  //   error: null,
+  //   mensaje: 'Bienvenido!',
+  //   token
+  // });
+
+});
+
+router.post('/sessions', async (req, res) => {
+  res.json({
+    mensaje : "holiu"
+  })
 });
 
 

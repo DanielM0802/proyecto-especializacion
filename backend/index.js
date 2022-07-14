@@ -27,12 +27,17 @@ app.set('port', process.env.PORT || 3000);
 // middlewares
 app.use(morgan('dev'));
 app.use(express.json());
-
+const userRoutes = require('./routes/users');
+const validaToken = require('./routes/validate-token');
+const sessions = require('./routes/sessions');
 // routes
-app.use('/api/users', require('./routes/users'));
+app.use('/api/users', userRoutes);
+app.use('/api/sessions', validaToken, sessions);
+//app.use('/api/users/sessions', validaToken, userRoutes);
+
 
 // static
-app.use(express.static(path.join(__dirname, 'public')));;
+app.use(express.static(path.join(__dirname, 'public')));
 
 // listenning on port
 app.listen(app.get('port'), () => {
