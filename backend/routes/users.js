@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
@@ -16,25 +17,20 @@ router.post('/', async (req, res) => {
   const user = new User(req.body);
   //AQUI SE APLICARIA BCRYPT
   const password = user.password;
-  const saltRounds = 10;
-  
-  bcrypt.hash(password, saltRounds)
-    .then(function(hashedPassword) {
-      user.password = hashedPassword;
-      return user.save();
-    })
-    .then(function() {
-      res.send();
-    })
-    .catch(function(error) {
-      console.log("Error saving user");
-      console.log(error);
-      next();
-    });
+  const saltos = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, saltos);
+  user.password = hashedPassword;
 
-  res.json({
-    status: 'User saved'
-  });
+  try{
+    const userDB = await user.save();
+    res.json({
+      error: null,
+      data: userDB
+    });
+  }catch (error) {
+    res.status(400).json(error);
+  }
+
 });
 
 router.post('/login', async function (req, res) { 
@@ -51,7 +47,11 @@ router.post('/login', async function (req, res) {
   
   console.log('usuario autenticado')
 
-  res.json(user);
+  const token = jwt.sign({
+      id: user._id
+  }, 'Token123');
+
+  res.json({user, token});
 
 });
 
