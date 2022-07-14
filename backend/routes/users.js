@@ -40,18 +40,23 @@ router.post('/login', async function (req, res) {
 
   // Buscando usuario y comparando password
   const user = await User.findOne({ username: username });
-  if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+  if (!user) return res.status(400).json({ error: true, mensaje: 'Usuario no encontrado' });
 
   const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) return res.status(400).json({ error: 'Contraseña incorrecta' });
+  if (!validPassword) return res.status(400).json({ error:true, mensaje: 'Contraseña incorrecta' });
   
   console.log('usuario autenticado')
 
   const token = jwt.sign({
-      id: user._id
+      id: user._id,
+      username: user.username
   }, 'Token123');
 
-  res.json({user, token});
+  res.json({
+    error: null,
+    mensaje: 'Bienvenido!',
+    token
+  });
 
 });
 
