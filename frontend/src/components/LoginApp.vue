@@ -27,7 +27,7 @@
     </div>
   </div>
   <div>
-    <SesionEstudio v-if="acciones.mostrarSesionEstudio" :currentUser="currentUser"/>
+    <SesionEstudio v-if="acciones.mostrarSesionEstudio" :currentUser="getUser()"/>
   </div>
 </template>
 
@@ -50,8 +50,7 @@ export default {
         username: null,
         password: null
       },
-      currentUser: null,
-      users: [],
+      user: null,
       ultimaAccion: 'mostrarLoginForm',
     }
   },
@@ -59,30 +58,23 @@ export default {
     async login(accion) {      
       console.log('llamando a api desde el frontend');
       await axios.post('http://localhost:3000/api/users/login', this.usuario).then((respuesta) => {
-        console.log('respuestaqa')
-        console.log(respuesta.data);
-      }).catch(err => console.log(err));
-      
-      for (let index = 0; index < this.users.length; index++) {
-        
-        if (this.users[index].username === this.username) {
-          console.log('funciona');
+        this.user = respuesta.data;
           this.acciones[this.ultimaAccion] = false;
           this.acciones[accion] = true ;
           this.ultimaAccion = accion;
-          this.currentUser = this.users[index];
-          this.$emit('mostrar_acciones', false);
-          break;
-        }
-        
-      }
+        this.$emit('mostrar_acciones', false);
+      })
+
+
+    },
+
+    getUser(){
+      const target_copy = Object.assign({}, this.user);
+      const target_copy2 = Object.assign({}, target_copy.data);
+      return target_copy2;
     }
-  },
-  async mounted() {
-    await axios.get(`https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/`).then((respuesta) => {
-      this.users = respuesta.data;
-    })
   }
+
 }
 </script>
 

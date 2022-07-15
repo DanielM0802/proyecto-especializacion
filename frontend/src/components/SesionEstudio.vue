@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="list-row-hover" v-for="session in user.sessions" :key="session.id">
+                    <tr class="list-row-hover" v-for="session in sessions" :key="session.id">
                         <th :id="session.id">{{session.id}}</th>
                         <td>{{session.date}}</td>
                         <td>{{session.score}}</td>
@@ -38,7 +38,7 @@
 
 <script>
 import Chart from 'chart.js/auto';
-
+import axios from 'axios';
 
 export default {
 
@@ -50,13 +50,24 @@ export default {
         return {
             user: this.currentUser,
             graficoSesiones: null,
+            sessions: []
         }
     },
     async mounted() {
         const ctx = document.getElementById('myChart');
         const labels = [];
-       
-        this.user.sessions.forEach(sesionActual => {
+
+        const respuesta1 = await axios.get(`http://localhost:3000/api/sessions/${this.user.userId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': this.user.token
+          },
+        });
+
+        const respuesta2 = await respuesta1.data.sessions
+        this.sessions = respuesta2;
+        console.log(respuesta2)
+        respuesta2.forEach(sesionActual => {
             labels.push('Sesion '.concat(sesionActual.id))
         });
 
@@ -66,13 +77,13 @@ export default {
                 label: 'Rendimiento (puntajes)',
                 backgroundColor: 'rgb(30,144,255)',
                 borderColor: 'rgb(30,144,255)',
-                data: this.user.sessions.map(sesionActual => sesionActual.score)
+                data: respuesta2.map(sesionActual => sesionActual.score)
             },
             {
                 label: 'Tiempo (minutos)',
                 backgroundColor: 'rgb(255, 51, 51)',
                 borderColor: 'rgb(255, 51, 51)',
-                data: this.user.sessions.map(sesionActual => sesionActual.duration)
+                data: respuesta2.map(sesionActual => sesionActual.duration)
             }]
         };
         const config = {
@@ -82,6 +93,8 @@ export default {
                 responsive: true
             }
         };
+
+        console.log(this.sessions);
 
         this.graficoSesiones = new Chart(ctx, config);
     }

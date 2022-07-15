@@ -54,14 +54,9 @@ router.post('/login', async function (req, res) {
 
   res.header('auth-token', token).json({
     error: null,
-    data: {token}
+    data: {userId: user._id, username: user.username, token}
   })
 
-  // res.json({
-  //   error: null,
-  //   mensaje: 'Bienvenido!',
-  //   token
-  // });
 
 });
 

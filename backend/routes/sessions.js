@@ -4,9 +4,10 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
-    const users = [];
-    const sesiones = [];
-    const user = await User.findById(req.params.id);
+    let users = [];
+    let sesiones = [];
+    console.log(req.params)
+    const user = await User.findOne({ id: req.params.id });
     const username = user.username;
 
     await axios.get(`https://7qak3a37b4dh7kisebhllubdxq0dnehm.lambda-url.us-east-1.on.aws/`).then((respuesta) => {
@@ -20,19 +21,10 @@ router.get('/:id', async (req, res) => {
             break;
         } 
     }
-    //const user = await User.findOne({ username: username });
-    //const username = user.username
-
-    //peticion con axios para buscar las sesiones de un usuario
-
-    //sesiones = axios...
 
     res.json({
         error: null,
-        data: {
-            title: "sesiones del usuario",
-            sessions: sesiones
-        }
+        sessions: sesiones
     })
 })
 
